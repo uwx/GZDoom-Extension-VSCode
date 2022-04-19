@@ -7,7 +7,7 @@
 
 import * as vscode from 'vscode';
 import { WadParser } from './WadParser';
-import { extname } from 'path';
+import { basename, extname } from 'path';
 
 export class WadFsProvider implements vscode.FileSystemProvider {
   private readonly fs = [
@@ -20,7 +20,7 @@ export class WadFsProvider implements vscode.FileSystemProvider {
 
   stat(uri: vscode.Uri): vscode.FileStat {
     console.log('stat', uri.fsPath, extname(uri.fsPath).toLowerCase());
-    if (extname(uri.fsPath).toLowerCase() === 'wad') return {
+    if (extname(uri.fsPath).toLowerCase() === '.wad') return {
       ctime: Date.now(),
       mtime: Date.now(),
       size: 100,
@@ -45,7 +45,7 @@ export class WadFsProvider implements vscode.FileSystemProvider {
 
   readFile(uri: vscode.Uri) {
     console.log('readDirectory', uri.fsPath);
-    return Buffer.from("Hello!");
+    return Buffer.from(`Hello from ${basename(uri.fsPath)}!`);
   }
 
   writeFile(uri: vscode.Uri, content: Uint8Array, options: { create: boolean, overwrite: boolean }): void {
