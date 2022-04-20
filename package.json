@@ -602,6 +602,16 @@
                     "sndseq"
                 ],
                 "configuration": "./configurations/basicLanguageConfiguration.json"
+            },
+            {
+                "id": "wad",
+                "aliases": [
+                    "Wad",
+                    "WAD"
+                ],
+                "extensions": [
+                    ".wad"
+                ]
             }
         ],
         "grammars": [
@@ -790,7 +800,44 @@
                 "scopeName": "source.sndseq",
                 "path": "./syntaxes/sndseq.tmLanguage.json"
             }
-        ]
+        ],
+        "commands": [
+            {
+                "command": "wadexplorer.exploreWadFile",
+                "title": "Explore Wad File"
+            },
+            {
+                "command": "wadexplorer.clear",
+                "title": "Close WAD file"
+            },
+            {
+                "command": "openWadResource",
+                "title": "View WAD Resource"
+            }
+        ],
+        "menus": {
+            "explorer/context": [
+                {
+                    "command": "wadexplorer.exploreWadFile",
+                    "when": "resourceLangId == wad",
+                    "group": "0_wad@1"
+                }
+            ],
+            "view/title": [
+                {
+                    "command": "wadexplorer.clear",
+                    "when": "view == wadExplorer"
+                }
+            ]
+        },
+        "views": {
+            "explorer": [
+                {
+                    "id": "wadExplorer",
+                    "name": "Wad Explorer"
+                }
+            ]
+        }
     },
     "author": {
         "name": "PROPHESSOR",
