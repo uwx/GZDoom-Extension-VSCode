@@ -12,7 +12,11 @@ import { basename } from 'path';
 
 import { WadFsProvider } from './WadFsProvider';
 
-function mount(uri: vscode.Uri) {
+const wadProvider = new WadFsProvider();
+
+async function mount(uri: vscode.Uri) {
+  await wadProvider.loadWad(uri);
+
   const wadUri = vscode.Uri.parse(`wad:${uri.fsPath}`);
 
   if (typeof vscode.workspace.getWorkspaceFolder(wadUri) === 'undefined') {
@@ -35,6 +39,8 @@ function unmount(uri: vscode.Uri): void {
   if (!vscode.workspace.workspaceFolders)
     throw new Error(`Assertion failed: workspaceFolders is undefined`);
 
+  wadProvider.unloadWad();
+  
   // When calling `updateWorkspaceFolders`, vscode still keeps the "workspace mode" even if a single folder remains which is quite annoying.
   // Because of this, we execute `vscode.openFolder` to open the workspace folder.
   if (vscode.workspace.workspaceFolders.length === 2) {
@@ -47,17 +53,13 @@ function unmount(uri: vscode.Uri): void {
 }
 
 export default [
-  vscode.workspace.registerFileSystemProvider(`wad`, new WadFsProvider(), {
+  vscode.workspace.registerFileSystemProvider(`wad`, wadProvider, {
     isCaseSensitive: false,
   }),
 
-  vscode.commands.registerCommand(`wadfs.mountWadFile`, (uri: vscode.Uri) => {
-    mount(uri);
-  }),
+  vscode.commands.registerCommand(`wadfs.mountWadFile`, mount),
 
-  vscode.commands.registerCommand(`wadfs.unmountWadFile`, (uri: vscode.Uri) => {
-    unmount(uri);
-  }),
+  vscode.commands.registerCommand(`wadfs.unmountWadFile`, unmount),
 
   vscode.commands.registerCommand(`wadfs.mountWadEditor`, () => {
     mount(vscode.window.activeTextEditor!.document.uri);

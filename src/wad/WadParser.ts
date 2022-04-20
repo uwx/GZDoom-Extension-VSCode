@@ -28,7 +28,7 @@ export class WadLump {
 
 export class WadParser {
   private type: 'IWAD' | 'PWAD' | null = null;
-  private lumps: WadLump[] | null = null;
+  public lumps: WadLump[] | null = null;
 
   constructor(private readonly buffer: ByteTools) { }
 
@@ -62,16 +62,6 @@ export class WadParser {
     console.log(`Parsed ${this.lumps.length} lumps`);
 
     await setImmediate();
-  }
-
-  fileStat(url: string): FileStat {
-    return {
-      ctime: Date.now(),
-      mtime: Date.now(),
-      size: 100,
-      type: FileType.File,
-      permissions: FilePermission.Readonly
-    }
   }
 
   /**
