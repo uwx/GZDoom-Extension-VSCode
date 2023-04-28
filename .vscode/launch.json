@@ -9,7 +9,14 @@
             "name": "Extension",
             "type": "extensionHost",
             "request": "launch",
-            "args": ["--extensionDevelopmentPath=${workspaceFolder}"]
+            "preLaunchTask": "Build",
+            "args": ["--extensionDevelopmentPath=${workspaceFolder}", "${cwd}/test"]
+        },
+        {
+            "name": "Extension (Without build)",
+            "type": "extensionHost",
+            "request": "launch",
+            "args": ["--extensionDevelopmentPath=${workspaceFolder}", "${cwd}/test"]
         }
     ]
 }

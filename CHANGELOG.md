@@ -15,10 +15,9 @@
 - Deleted any trace of javascript, again.
 - Added syntax highlighting support for most [Special Lumps](https://zdoom.org/wiki/Special_lumps)
 
-## [1.8.3] The "Bundler" update
-- Extension weights almost 13 MB less.
+Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [1.8.2] The "ZScript on the GO" update
+## [Unreleased]
 
 - Restarted the project, again.
 - Now the extension runs on the web version of vscode
